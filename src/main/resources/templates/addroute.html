@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<title>Add Route</title>
+</head>
+<body>
+	<div class="shadow-lg p-4 mb-4 bg-light text-center">
+		<h1>Add Route</h1>
+	</div>
+
+	<form th:object="${route}" th:action="@{/addRoute}" method="POST">
+
+		<div class="border m-1 p-2 rounded-sm bg-light">
+			<div class="row">
+				<div class="col-sm-4">
+					<Label>Id:</Label> <input th:field="*{id}" type="text"
+						class="w-25 form-control" readonly>
+				</div>
+				<div class="col-sm-8">
+					<Label>Route Plan:</Label> <input th:field="*{routePlan}"
+						type="text" class="w-100 form-control">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-4">
+					<Label>Assigned Vehicle:</Label> <input
+						th:field="*{assignedVehicle}" type="text"
+						class="w-25 form-control">
+				</div>
+				<div class="col-sm-8">
+					<Label>Status:</Label> <select th:field="*{status}"
+						class="w-25 form-control">
+						<option value="Pendente">Pendente</option>
+						<option value="Em progresso">Em progresso</option>
+						<option value="Concluída">Concluída</option>
+					</select>
+				</div>
+
+			</div>
+		</div>
+		<div class=" border">
+			<div th:each="plannedStop, rowStat:${route.plannedStops}">
+				<div class="border rounded-sm bg-light">
+					<div class="bg-primary rounded-sm">
+						<Label> Planned Stop Details</Label>
+					</div>
+					<div class="row border m-1 p-2 rounded-sm">
+						<div class="col-sm-2">
+							<Label>Id:</Label> <input
+								th:field="${route.plannedStops[__${rowStat.index}__].id}"
+								type="text" class=" w-100  form-control" readonly>
+						</div>
+						<div class="col-sm-8">
+							<Label>Description:</Label> <input
+								th:field="${route.plannedStops[__${rowStat.index}__].description}"
+								type="text" class=" w-100  form-control">
+						</div>
+						<div class="col-sm-2">
+							<Label>Status:</Label> <select
+								th:field="${route.plannedStops[__${rowStat.index}__].status}"
+								class="w-100 form-control">
+								<option value="Pendente">Pendente</option>
+								<option value="Em atendimento">Em atendimento</option>
+								<option value="Concluída">Concluída</option>
+							</select>
+						</div>
+					</div>
+					<div class="row border m-1 p-2 rounded-sm">
+						<div class="col-sm-3">
+							<Label>Latitude:</Label> <input
+								th:field="${route.plannedStops[__${rowStat.index}__].lat}"
+								type="text" class="w-100 form-control">
+						</div>
+						<div class="col-sm-3">
+							<Label>Longitude:</Label> <input
+								th:field="${route.plannedStops[__${rowStat.index}__].lng}"
+								type="text" class="w-100 form-control">
+						</div>
+
+						<div class="col-sm-3">
+							<Label>Delivery Radius:</Label> <input
+								th:field="${route.plannedStops[__${rowStat.index}__].deliveryRadius}"
+								type="text" class="w-100 form-control">
+						</div>
+						<div class="col-sm-3">
+							<button class="btn btn-outline-danger w-100 h-100" type="submit"
+								th:name="removeItem" th:value="${rowStat.index}">Remove
+								item</button>
+
+						</div>
+					</div>
+				</div>
+				<div>
+					<br>
+				</div>
+			</div>
+
+		</div>
+
+		<div class=" row">
+			<button class="btn btn-outline-success w-25 col mx-auto" type="submit">Save</button>
+			<button class="btn btn-outline-primary w-50 col h-100 mx-auto" type="submit"
+				th:name="addItem">Add PlannedStop</button>
+			<a href="/routes" class="btn btn-outline-warning w-25 col mx-auto">Voltar</a>
+		</div>
+		<div class="col-sm-3"></div>
+	</form>
+
+</body>
+</html>

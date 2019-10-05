@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<title>Routes</title>
+</head>
+<body>
+	<div>
+		<div class="jumbotron text-center">
+			<h1>Avaliable Routes</h1>
+		</div>
+		<div id="mensagem" th:class="alert" th:classappend="${#strings.contains(status,'offline')} ? alert-danger : alert-success" th:text="${status}" >Teste</div>		
+		<table class="table table-hover shadow-lg">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>RoutePlan</th>
+					<th>Assigned Vehicle</th>
+					<th>Status</th>
+					
+				</tr>
+
+			</thead>
+			<tbody>
+				<tr th:each="route : ${list}">
+					<td th:text="${route.id}"></td>
+					<td th:text="${route.routePlan}"></td>
+					<td th:text="${route.assignedVehicle}"></td>
+					<td th:text="${route.status}"></td>
+					<td>
+						<div>
+							<a th:href="@{/toView/{id}(id=${route.id})}"
+								class="btn btn-outline-primary">To View</a>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="shadow-lg p-4 mb-4 bg-white row" >
+			<a class="btn btn-outline-success" th:href="@{/addRoute}"> Add Route</a>
+			<a class="btn btn-outline-primary" th:href="@{/routes-file}"> Save Routes</a>
+			<a class="btn btn-outline-secondary" th:href="@{/routes-file-load}"> Load Routes</a>
+		</div>
+		 
+		
+	</div>
+</body>
+</html>
